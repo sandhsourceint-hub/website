@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 import { Logo } from "./Logo";
+import { ThemeToggle } from "./ThemeToggle";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -34,11 +35,11 @@ export function Navbar() {
       }`}
     >
       <div className="container-x flex h-16 items-center justify-between md:h-20">
-        <Link to="/" className="group">
+        <Link to="/" className="group flex min-h-11 items-center">
           <Logo surface="light" />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {nav.map((n) => {
             const active = pathname === n.to;
             return (
@@ -59,7 +60,8 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 lg:flex">
+          <ThemeToggle />
           <Link
             to="/contact"
             className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full gradient-royal px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition-transform hover:scale-[1.03]"
@@ -69,20 +71,23 @@ export function Navbar() {
           </Link>
         </div>
 
-        <button
-          onClick={() => setOpen((s) => !s)}
-          className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-background/70 md:hidden"
-          aria-label="Menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setOpen((s) => !s)}
+            className="grid h-11 w-11 place-items-center rounded-xl border border-border bg-background/70"
+            aria-label="Menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {open && (
         <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
-          className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl"
+          className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl"
         >
           <div className="container-x flex flex-col gap-1 py-4">
             {nav.map((n) => (
@@ -90,7 +95,7 @@ export function Navbar() {
                 key={n.to}
                 to={n.to}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary"
+                className="flex min-h-11 items-center rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary"
               >
                 {n.label}
               </Link>

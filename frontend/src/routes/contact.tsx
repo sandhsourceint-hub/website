@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Phone, MapPin, Printer, Clock, ArrowRight } from "lucide-react";
-import { AnimatedBackground, SectionHeading } from "../component/site/AnimatedBackground";
-import { BRAND as brand } from "../data/company";
+import { SectionHeading } from "../component/site/AnimatedBackground";
+import { StaticBackdrop } from "../component/site/StaticBackdrop";
+import { BRAND as brand, pageTitle } from "../data/company";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Source International" },
+      { title: pageTitle("Contact") },
       {
         name: "description",
         content:
@@ -58,25 +59,27 @@ function ContactPage() {
   return (
     <div>
       <section className="relative overflow-hidden bg-brand-dark py-24 text-white md:py-32">
-        <AnimatedBackground variant="dark" />
-        <div className="container-x relative max-w-3xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-accent">
-            Contact
-          </span>
-          <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] md:text-6xl">
-            Let's <span className="text-gradient">work together</span>.
-          </h1>
-          <p className="mt-6 max-w-2xl text-white/80">
-            Request a corporate quotation or supply proposal. Our team responds within one business
-            day.
-          </p>
+        <StaticBackdrop />
+        <div className="container-x relative">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-accent">
+              Contact
+            </span>
+            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] md:text-6xl">
+              Let's <span className="text-gradient">work together</span>.
+            </h1>
+            <p className="mt-6 max-w-2xl text-white/80">
+              Request a corporate quotation or supply proposal. Our team responds within one
+              business day.
+            </p>
+          </div>
         </div>
       </section>
 
       <section className="container-x py-16">
         <div
-          className={`grid gap-4 md:grid-cols-2 ${
-            contactCards.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4"
+          className={`grid gap-4 sm:grid-cols-2 ${
+            contactCards.length === 5 ? "lg:grid-cols-3 xl:grid-cols-5" : "lg:grid-cols-4"
           }`}
         >
           {contactCards.map((c) => (
@@ -134,7 +137,7 @@ function ContactPage() {
           </div>
 
           <div className="flex flex-col gap-6">
-            <div className="relative aspect-square overflow-hidden rounded-3xl border border-border shadow-elevated md:aspect-[4/5]">
+            <div className="relative aspect-square overflow-hidden rounded-3xl border border-border shadow-elevated lg:aspect-[4/5]">
               <div className="absolute inset-0 gradient-royal opacity-90" />
               <div className="absolute inset-0 grid-pattern opacity-20" />
               <div className="relative flex h-full flex-col justify-between p-8 text-white">
@@ -163,15 +166,15 @@ function ContactPage() {
               <div className="mt-4 grid gap-2 text-sm">
                 <a
                   href={`mailto:${brand.email}`}
-                  className="flex items-center gap-2 text-brand hover:underline"
+                  className="flex min-h-11 items-center gap-2 text-brand hover:underline"
                 >
-                  <Mail className="h-4 w-4" /> {brand.email}
+                  <Mail className="h-4 w-4 shrink-0" /> {brand.email}
                 </a>
                 <a
                   href={`tel:${brand.phone.replace(/\s/g, "")}`}
-                  className="flex items-center gap-2 text-brand hover:underline"
+                  className="flex min-h-11 items-center gap-2 text-brand hover:underline"
                 >
-                  <Phone className="h-4 w-4" /> {brand.phone}
+                  <Phone className="h-4 w-4 shrink-0" /> {brand.phone}
                 </a>
               </div>
             </div>

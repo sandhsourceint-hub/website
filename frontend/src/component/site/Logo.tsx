@@ -1,13 +1,15 @@
+import markSrc from "../../assets/logo-mark.png";
+
 /**
- * Brand lockup, rebuilt from the company logo:
- *   • "S&H" monogram in a deep-navy tile
+ * Brand lockup:
+ *   • the company "S&H" monogram tile
  *   • a thin rule
  *   • "SOURCE INTERNATIONAL" in tracked caps, the first "O" a blue sphere
  *   • short strapline beneath
  *
- * Drawn in markup rather than shipped as an image so it stays sharp at every
- * size and on every screen density, adapts to light and dark surfaces, and
- * adds no download weight.
+ * The monogram is the real artwork (assets/LOGO.png, cropped square); the
+ * wordmark beside it is drawn in markup so it stays sharp at every size and
+ * adapts to light and dark surfaces.
  */
 
 type Surface = "light" | "dark";
@@ -30,18 +32,21 @@ function SphereO() {
   );
 }
 
-/** The "S&H" tile — usable on its own as a compact mark or favicon-style badge. */
+/**
+ * The "S&H" tile — the company logo, usable on its own as a compact mark.
+ * The artwork is already a navy square, so the tile needs no background of its
+ * own; it only rounds the corners to match the rest of the UI.
+ */
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
-    <span
+    <img
+      src={markSrc}
+      alt=""
       aria-hidden
-      className={`grid shrink-0 place-items-center rounded-[5px] ${className}`}
-      style={{ background: "linear-gradient(150deg, #1b4f8f 0%, #0d3a6b 55%, #07264a 100%)" }}
-    >
-      <span className="font-display font-bold leading-none tracking-[-0.03em] text-white">
-        S&amp;H
-      </span>
-    </span>
+      width={320}
+      height={320}
+      className={`shrink-0 rounded-[5px] object-cover ${className}`}
+    />
   );
 }
 
@@ -59,7 +64,9 @@ export function Logo({
 
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
-      <LogoMark className="h-9 w-9 text-[11px] md:h-10 md:w-10 md:text-[12px]" />
+      {/* The mark's navy sits close to the dark footer, so a hairline ring
+          keeps its edges readable there. */}
+      <LogoMark className={`h-9 w-9 md:h-10 md:w-10 ${dark ? "ring-1 ring-white/15" : ""}`} />
 
       <span
         aria-hidden
@@ -75,12 +82,12 @@ export function Logo({
             dark ? "text-white" : "text-foreground"
           }`}
         >
-          S<SphereO />
+          sandh S<SphereO />
           urce<span className="ml-[0.45em]">International</span>
         </span>
         {showStrapline && (
           <span
-            className={`mt-[5px] hidden text-[8px] uppercase tracking-[0.15em] sm:block md:text-[8.5px] ${
+            className={`mt-[5px] hidden text-[9.5px] uppercase tracking-[0.15em] sm:block md:text-[10px] lg:hidden xl:block ${
               dark ? "text-white/55" : "text-muted-foreground"
             }`}
           >
