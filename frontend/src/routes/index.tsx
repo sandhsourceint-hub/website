@@ -12,23 +12,36 @@ import {
   ShieldCheck,
   Truck,
   Sparkles,
-  Star,
-  Quote,
 } from "lucide-react";
-import heroBg from "../assets/hero-bg.jpg";
-import { AnimatedBackground, SectionHeading } from "../component/site/AnimatedBackground";
+import { SectionHeading } from "../component/site/AnimatedBackground";
+import { ClientWall } from "../component/site/ClientWall";
 import { Counter } from "../component/site/Counter";
-import { BRAND } from "../data/company";
-import { CATEGORY_COUNTS } from "../data/products";
+import { SceneCanvas } from "../component/site/SceneCanvas";
+import { BRAND, pageTitle } from "../data/company";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: pageTitle() },
+      {
+        name: "description",
+        content:
+          "Source International — corporate supplier of stationery, office supplies, computer accessories and paper products for offices, institutes and companies across Pakistan.",
+      },
+      { property: "og:title", content: pageTitle() },
+      {
+        property: "og:description",
+        content: "Your trusted partner for corporate stationery, office supplies and procurement.",
+      },
+    ],
+  }),
   component: HomePage,
 });
 
 const stats = [
   { value: 14, suffix: "+", label: "Years of Experience" },
-  { value: 100, suffix: "+", label: "Corporate Clients" },
-  { value: 10000, suffix: "+", label: "Products Delivered" },
+  // Matches the figure on the About page; the site carries one client count.
+  { value: 30, suffix: "+", label: "Corporate Clients" },
   { value: 24, suffix: "/7", label: "Client Support" },
 ];
 
@@ -64,37 +77,11 @@ const whyChoose = [
   },
 ];
 
-const partners = [
-  "ACME",
-  "NEXUS",
-  "ORION",
-  "MERIDIAN",
-  "ATLAS",
-  "VERTEX",
-  "HALCYON",
-  "AURORA",
-  "CIPHER",
-  "PINNACLE",
-];
-
-const testimonials = [
-  {
-    quote:
-      "Reliable, on-time and priced right — Source International is our go-to procurement partner across every branch office.",
-    author: "Procurement Director",
-    company: "Private Corporate Group",
-  },
-  {
-    quote:
-      "From office stationery to enterprise IT accessories, they simply deliver. Zero back-and-forth.",
-    author: "Facilities Manager",
-    company: "Global Bank",
-  },
-  {
-    quote: "Their bulk education supply program powers 40 of our campuses. World-class service.",
-    author: "Operations Head",
-    company: "Education Group",
-  },
+const groupEntities = [
+  "sandhsourceinternational",
+  "sandiinternational",
+  "sourcingVision",
+  "traders",
 ];
 
 function HomePage() {
@@ -103,14 +90,10 @@ function HomePage() {
       {/* HERO */}
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <img
-            src={heroBg}
-            alt=""
-            className="h-full w-full object-cover opacity-90"
-            width={1920}
-            height={1280}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/70 via-brand-dark/85 to-background" />
+          {/* Was a static render of these same spheres and cubes; the canvas
+              draws them live so the scene moves. */}
+          <SceneCanvas variant="spheres" />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/40 via-brand-dark/70 to-background" />
         </div>
         <div className="absolute inset-0 -z-10 grid-pattern opacity-15" />
         <motion.div
@@ -130,7 +113,7 @@ function HomePage() {
               <span className="h-1.5 w-1.5 rounded-full bg-brand-accent shadow-glow" />
               Corporate Procurement Partner
             </span>
-            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white md:text-7xl">
+            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
               Supplying the world's <span className="text-gradient">most demanding</span>{" "}
               workplaces.
             </h1>
@@ -138,8 +121,8 @@ function HomePage() {
               {BRAND.strapline}
             </p>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/70">
-              End-to-end procurement solutions — built for private offices, educational institutes
-              and companies.
+              End-to-end procurement solutions — built for industries, offices, and educational
+              institutions.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <Link
@@ -159,7 +142,7 @@ function HomePage() {
           </motion.div>
 
           {/* Floating cards */}
-          <div className="pointer-events-none mt-20 hidden md:block">
+          <div className="pointer-events-none mt-20 hidden lg:block">
             <div className="grid grid-cols-4 gap-4">
               {[
                 "Office Stationery",
@@ -190,7 +173,7 @@ function HomePage() {
       <section className="relative -mt-10 md:-mt-16">
         <div className="container-x">
           <div className="relative rounded-3xl border border-border bg-card p-6 shadow-elevated md:p-10">
-            <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+            <div className="mx-auto grid max-w-3xl grid-cols-3 gap-4 sm:gap-6">
               {stats.map((s) => (
                 <div key={s.label} className="text-center">
                   <div className="font-display text-3xl font-bold text-gradient md:text-5xl">
@@ -208,7 +191,7 @@ function HomePage() {
 
       {/* INTRO */}
       <section className="container-x py-24 md:py-32">
-        <div className="grid gap-12 md:grid-cols-2 md:gap-16 md:items-center">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
           <SectionHeading
             eyebrow="Who We Are"
             title={
@@ -242,55 +225,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* PRODUCT CATEGORIES */}
-      <section className="relative overflow-hidden bg-secondary/40 py-24 md:py-32">
-        <AnimatedBackground />
-        <div className="container-x relative">
-          <SectionHeading
-            center
-            eyebrow="Product Universe"
-            title={
-              <>
-                Everything your <span className="text-gradient">workplace</span> needs.
-              </>
-            }
-            desc="Nine deeply curated categories — thousands of authenticated SKUs. From daily consumables to specialty procurement."
-          />
-          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {CATEGORY_COUNTS.map(({ category, count }, i) => (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ delay: (i % 3) * 0.08 }}
-              >
-                <Link
-                  to="/products"
-                  className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-6 transition hover:-translate-y-1 hover:border-brand/30 hover:shadow-elevated"
-                >
-                  <div
-                    className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100"
-                    style={{ background: "var(--gradient-glow)" }}
-                  />
-                  <div className="relative">
-                    <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand">
-                      Category {String(i + 1).padStart(2, "0")}
-                    </div>
-                    <h3 className="mt-3 font-display text-xl font-semibold">{category}</h3>
-                    <div className="mt-2 text-sm text-muted-foreground">{count} products</div>
-                  </div>
-                  <div className="relative mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-                    Browse{" "}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* INDUSTRIES */}
       <section className="container-x py-24 md:py-32">
         <SectionHeading
@@ -318,61 +252,27 @@ function HomePage() {
         </div>
       </section>
 
-      {/* PARTNERS */}
-      <section className="relative overflow-hidden border-y border-border bg-card py-14">
-        <div className="container-x mb-6 text-center text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-          Trusted by leading organizations
-        </div>
-        <div className="relative overflow-hidden">
-          <div className="flex w-max animate-marquee gap-16 px-8">
-            {[...partners, ...partners].map((p, i) => (
-              <span
-                key={i}
-                className="font-display text-2xl font-bold tracking-widest text-muted-foreground/60"
-              >
-                {p}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
-      <section className="container-x py-24 md:py-32">
+      {/* GROUP ENTITIES */}
+      <section className="container-x py-12 md:py-20">
         <SectionHeading
           center
-          eyebrow="Client Voices"
-          title={
-            <>
-              What partners <span className="text-gradient">say</span>.
-            </>
-          }
+          eyebrow="Group"
+          title={<>Group Entities</>}
+          desc="The following entities operate under the Source International umbrella."
         />
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: i * 0.1 }}
-              className="relative overflow-hidden rounded-2xl border border-border bg-card p-8 shadow-elevated"
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {groupEntities.map((g) => (
+            <div
+              key={g}
+              className="flex items-center justify-center rounded-2xl border border-border bg-card p-4 text-center text-sm font-semibold break-words sm:p-6 sm:text-base"
             >
-              <Quote className="absolute -right-2 -top-2 h-24 w-24 text-brand/5" />
-              <div className="flex gap-1 text-brand-accent">
-                {Array.from({ length: 5 }).map((_, k) => (
-                  <Star key={k} className="h-4 w-4 fill-current" />
-                ))}
-              </div>
-              <p className="mt-5 text-[15px] leading-relaxed text-foreground/90">"{t.quote}"</p>
-              <div className="mt-6 border-t border-border pt-4">
-                <div className="font-semibold text-sm">{t.author}</div>
-                <div className="text-xs text-muted-foreground">{t.company}</div>
-              </div>
-            </motion.div>
+              {g}
+            </div>
           ))}
         </div>
       </section>
+
+      <ClientWall />
 
       {/* CTA */}
       <section className="container-x pb-24">
@@ -383,7 +283,7 @@ function HomePage() {
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ duration: 6, repeat: Infinity }}
           />
-          <div className="relative grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-center">
+          <div className="relative grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
             <div>
               <h3 className="font-display text-3xl font-bold leading-tight text-white md:text-5xl">
                 Ready to modernize your procurement?
@@ -393,7 +293,7 @@ function HomePage() {
                 recurring institutional orders. We respond within one business day.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3 md:justify-end">
+            <div className="flex flex-wrap gap-3 lg:justify-end">
               <Link
                 to="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-brand-dark shadow-glow"
