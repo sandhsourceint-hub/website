@@ -10,13 +10,14 @@ import {
   ArrowRight,
   type LucideIcon,
 } from "lucide-react";
-import { AnimatedBackground, SectionHeading } from "../component/site/AnimatedBackground";
-import { SERVICES as services } from "../data/company";
+import { SectionHeading } from "../component/site/AnimatedBackground";
+import { SceneBackground } from "../component/site/SceneCanvas";
+import { SERVICES as services, pageTitle } from "../data/company";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — Source International" },
+      { title: pageTitle("Services") },
       {
         name: "description",
         content:
@@ -54,18 +55,20 @@ function ServicesPage() {
   return (
     <div>
       <section className="relative overflow-hidden bg-brand-dark py-24 text-white md:py-32">
-        <AnimatedBackground variant="dark" />
-        <div className="container-x relative max-w-3xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-accent">
-            Services
-          </span>
-          <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] md:text-6xl">
-            End-to-end <span className="text-gradient">corporate supply</span>.
-          </h1>
-          <p className="mt-6 max-w-2xl text-white/80">
-            From a single quotation to multi-year institutional contracts — our services are built
-            for organizations that value reliability and precision.
-          </p>
+        <SceneBackground variant="flow" />
+        <div className="container-x relative">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-accent">
+              Services
+            </span>
+            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] md:text-6xl">
+              End-to-end <span className="text-gradient">corporate supply</span>.
+            </h1>
+            <p className="mt-6 max-w-2xl text-white/80">
+              From a single quotation to multi-year institutional contracts — our services are built
+              for organizations that value reliability and precision.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -108,7 +111,7 @@ function ServicesPage() {
             }
             desc="A four-stage engagement designed for procurement teams who need clarity and speed."
           />
-          <div className="mt-14 grid gap-4 md:grid-cols-4">
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {process.map((p, i) => (
               <motion.div
                 key={p.k}
@@ -130,7 +133,7 @@ function ServicesPage() {
       <section className="container-x py-24">
         <div className="relative overflow-hidden rounded-3xl gradient-royal p-10 shadow-elevated md:p-14">
           <div className="pointer-events-none absolute inset-0 grid-pattern opacity-20" />
-          <div className="relative grid gap-6 md:grid-cols-[1.4fr_1fr] md:items-center">
+          <div className="relative grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-center">
             <div>
               <h3 className="font-display text-3xl font-bold leading-tight text-white md:text-4xl">
                 Bring your procurement into one trusted supplier.
@@ -140,7 +143,7 @@ function ServicesPage() {
                 supply program.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3 md:justify-end">
+            <div className="flex flex-wrap gap-3 lg:justify-end">
               <Link
                 to="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-brand-dark shadow-glow"
