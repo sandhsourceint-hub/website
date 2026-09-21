@@ -6,12 +6,16 @@ import {
   Truck,
   Warehouse,
   Building2,
+  Factory,
+  Landmark,
+  GraduationCap,
+  MapPin,
   ArrowRight,
   type LucideIcon,
 } from "lucide-react";
 import { SectionHeading } from "../component/site/AnimatedBackground";
 import { SceneBackground } from "../component/site/SceneCanvas";
-import { SERVICES as services, pageTitle } from "../data/company";
+import { SECTORS as sectors, SERVICES as services, pageTitle } from "../data/company";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -36,10 +40,18 @@ export const Route = createFileRoute("/services")({
 // defined in data/company.ts.
 const SERVICE_ICONS: Record<string, LucideIcon> = {
   "Corporate Procurement": Boxes,
-  "Tenders & Quotations": FileCheck2,
+  Tenders: FileCheck2,
   "Institutional Sales": Building2,
   "Logistics & Delivery": Truck,
   "Inventory Management": Warehouse,
+};
+
+const SECTOR_ICONS: Record<string, LucideIcon> = {
+  "Corporate & Industrial": Factory,
+  "Office & Tendering": FileCheck2,
+  "Government & Semi-Government": Landmark,
+  "Schools, Colleges & Universities": GraduationCap,
+  "Local Supplies": MapPin,
 };
 
 const process = [
@@ -90,6 +102,47 @@ function ServicesPage() {
                   </span>
                   <h3 className="mt-5 font-display text-lg font-semibold">{s.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="container-x pb-24 md:pb-32">
+        <SectionHeading
+          center
+          eyebrow="Sectors"
+          title={
+            <>
+              Who we <span className="text-gradient">supply</span>.
+            </>
+          }
+          desc="The same catalog and the same terms, adapted to how each kind of buyer orders."
+        />
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {sectors.map((sector, i) => {
+            const Icon = SECTOR_ICONS[sector.title] ?? Boxes;
+            return (
+              <motion.div
+                key={sector.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ delay: (i % 3) * 0.08 }}
+                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition hover:-translate-y-1 hover:border-brand/30 hover:shadow-elevated"
+              >
+                <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-brand-accent/10 transition group-hover:scale-150" />
+                <div className="relative">
+                  <span className="grid h-12 w-12 place-items-center rounded-xl gradient-royal text-white shadow-glow">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-4 font-display text-lg font-semibold leading-snug">
+                    {sector.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {sector.desc}
+                  </p>
                 </div>
               </motion.div>
             );

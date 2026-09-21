@@ -92,13 +92,45 @@ export const GROUP: { parent: GroupEntity; children: GroupEntity[] } = {
   children: [{ name: "SNI International Sourcing" }, { name: "Vision Traders" }],
 };
 
+/**
+ * The markets the company supplies, shown as a band on the services page.
+ *
+ * Separate from SERVICES on purpose: those say what the company does, these
+ * say who it does it for. Three of them would otherwise read as duplicates of
+ * Corporate Procurement and Institutional Sales.
+ */
+export type SectorContent = { title: string; desc: string };
+
+export const SECTORS: SectorContent[] = [
+  {
+    title: "Corporate & Industrial",
+    desc: "Recurring supply for corporate offices, factories and industrial units — consumables, packaging and general items.",
+  },
+  {
+    title: "Office & Tendering",
+    desc: "Day-to-day office supply, together with tender preparation and documentation.",
+  },
+  {
+    title: "Government & Semi-Government",
+    desc: "Supply to public sector departments and semi-government bodies, on tender-compliant terms.",
+  },
+  {
+    title: "Schools, Colleges & Universities",
+    desc: "Stationery and administrative supplies for educational institutions, scheduled around the academic year.",
+  },
+  {
+    title: "Local Supplies",
+    desc: "Short-notice local delivery for urgent and top-up requirements.",
+  },
+];
+
 export const SERVICES: ServiceContent[] = [
   {
     title: "Corporate Procurement",
     desc: "End-to-end procurement management for growing enterprises — vendor consolidation, catalog curation and predictable pricing.",
   },
   {
-    title: "Tenders & Quotations",
+    title: "Tenders",
     desc: "Documentation-ready responses to corporate tenders and requests for quotation.",
   },
   {
