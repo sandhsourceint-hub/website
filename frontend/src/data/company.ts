@@ -98,10 +98,6 @@ export const SERVICES: ServiceContent[] = [
     desc: "End-to-end procurement management for growing enterprises — vendor consolidation, catalog curation and predictable pricing.",
   },
   {
-    title: "Bulk Orders",
-    desc: "Volume-based pricing on high-turnover SKUs with dedicated account management.",
-  },
-  {
     title: "Tenders & Quotations",
     desc: "Documentation-ready responses to corporate tenders and requests for quotation.",
   },

@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import {
   Boxes,
   FileCheck2,
-  Package2,
   Truck,
   Warehouse,
   Building2,
@@ -37,7 +36,6 @@ export const Route = createFileRoute("/services")({
 // defined in data/company.ts.
 const SERVICE_ICONS: Record<string, LucideIcon> = {
   "Corporate Procurement": Boxes,
-  "Bulk Orders": Package2,
   "Tenders & Quotations": FileCheck2,
   "Institutional Sales": Building2,
   "Logistics & Delivery": Truck,
