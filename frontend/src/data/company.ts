@@ -92,54 +92,22 @@ export const GROUP: { parent: GroupEntity; children: GroupEntity[] } = {
   children: [{ name: "SNI International Sourcing" }, { name: "Vision Traders" }],
 };
 
-/**
- * The markets the company supplies, shown as a band on the services page.
- *
- * Separate from SERVICES on purpose: those say what the company does, these
- * say who it does it for. Three of them would otherwise read as duplicates of
- * Corporate Procurement and Institutional Sales.
- */
-export type SectorContent = { title: string; desc: string };
-
-export const SECTORS: SectorContent[] = [
-  {
-    title: "Corporate & Industrial",
-    desc: "Recurring supply for corporate offices, factories and industrial units — consumables, packaging and general items.",
-  },
-  {
-    title: "Office & Tendering",
-    desc: "Day-to-day office supply, together with tender preparation and documentation.",
-  },
-  {
-    title: "Government & Semi-Government",
-    desc: "Supply to public sector departments and semi-government bodies, on tender-compliant terms.",
-  },
-  {
-    title: "Schools, Colleges & Universities",
-    desc: "Stationery and administrative supplies for educational institutions, scheduled around the academic year.",
-  },
-  {
-    title: "Local Supplies",
-    desc: "Short-notice local delivery for urgent and top-up requirements.",
-  },
-];
-
 export const SERVICES: ServiceContent[] = [
   {
-    title: "Corporate Procurement",
-    desc: "End-to-end procurement management for growing enterprises — vendor consolidation, catalog curation and predictable pricing.",
+    title: "Corporate & Industrial Supply",
+    desc: "End-to-end procurement for corporate offices, factories and industrial units — vendor consolidation, catalog curation and predictable pricing.",
   },
   {
-    title: "Tenders",
-    desc: "Documentation-ready responses to corporate tenders and requests for quotation.",
+    title: "Tenders & Government Supply",
+    desc: "Documentation-ready responses to corporate and public tenders, and supply to government and semi-government bodies on tender-compliant terms.",
   },
   {
-    title: "Institutional Sales",
-    desc: "Long-term supply agreements for schools, colleges, training institutes and corporate campuses.",
+    title: "Institutional & Education Supply",
+    desc: "Long-term agreements for schools, colleges, universities and training institutes, scheduled around the academic year.",
   },
   {
     title: "Logistics & Delivery",
-    desc: "In-house fleet plus regional 3PL — next-day nationwide fulfillment on stocked items.",
+    desc: "In-house fleet plus regional partners — next-day fulfillment on stocked items, and short-notice local delivery for urgent top-ups.",
   },
   {
     title: "Inventory Management",
