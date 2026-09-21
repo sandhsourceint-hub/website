@@ -223,3 +223,75 @@
 .animate-float-slow {
   animation: float-slow 8s ease-in-out infinite;
 }
+
+/* Group entity tree ---------------------------------------------------------
+   Connectors are gradient strips whose background slides, so the light appears
+   to travel down the trunk and out along the branches. Cheaper and steadier
+   than animating an SVG stroke, and it survives any container size. */
+@keyframes tree-flow-down {
+  to {
+    background-position: 0 -200%;
+  }
+}
+@keyframes tree-flow-out {
+  to {
+    background-position: 200% 0;
+  }
+}
+
+.tree-line-v {
+  width: 2px;
+  border-radius: 2px;
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--brand) 22%, transparent) 0%,
+    var(--brand-accent) 35%,
+    color-mix(in oklab, var(--brand) 22%, transparent) 70%
+  );
+  background-size: 100% 200%;
+  animation: tree-flow-down 2.6s linear infinite;
+}
+
+.tree-line-h {
+  height: 2px;
+  border-radius: 2px;
+  background-image: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--brand) 22%, transparent) 0%,
+    var(--brand-accent) 35%,
+    color-mix(in oklab, var(--brand) 22%, transparent) 70%
+  );
+  background-size: 200% 100%;
+  animation: tree-flow-out 2.6s linear infinite;
+}
+
+/* The tree is lit from above: cards sit on a plane the viewer looks down on,
+   and rise toward them on hover. */
+.tree-stage {
+  perspective: 1400px;
+  perspective-origin: 50% 0%;
+}
+
+.tree-card {
+  transform-style: preserve-3d;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tree-card:hover {
+  transform: translateZ(38px) rotateX(-4deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-line-v,
+  .tree-line-h {
+    animation: none;
+  }
+  .tree-card {
+    transition: none;
+  }
+  .tree-card:hover {
+    transform: none;
+  }
+}

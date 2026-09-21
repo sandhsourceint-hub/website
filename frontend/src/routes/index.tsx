@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { SectionHeading } from "../component/site/AnimatedBackground";
 import { ClientWall } from "../component/site/ClientWall";
+import { GroupTree } from "../component/site/GroupTree";
 import { Counter } from "../component/site/Counter";
 import { SceneCanvas } from "../component/site/SceneCanvas";
 import { BRAND, pageTitle } from "../data/company";
@@ -75,13 +76,6 @@ const whyChoose = [
     title: "Bulk & Custom",
     desc: "From a single quotation to recurring corporate contracts — priced to scale.",
   },
-];
-
-const groupEntities = [
-  "sandhsourceinternational",
-  "sandiinternational",
-  "sourcingVision",
-  "traders",
 ];
 
 function HomePage() {
@@ -260,16 +254,7 @@ function HomePage() {
           title={<>Group Entities</>}
           desc="The following entities operate under the Source International umbrella."
         />
-        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {groupEntities.map((g) => (
-            <div
-              key={g}
-              className="flex items-center justify-center rounded-2xl border border-border bg-card p-4 text-center text-sm font-semibold break-words sm:p-6 sm:text-base"
-            >
-              {g}
-            </div>
-          ))}
-        </div>
+        <GroupTree />
       </section>
 
       <ClientWall />

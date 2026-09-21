@@ -74,6 +74,24 @@ export const BRAND: Brand = {
   hours: "Mon–Sat · 9:00 – 18:00",
 };
 
+/**
+ * The group structure shown as a tree on the home page.
+ *
+ * `note` is deliberately empty: what each entity actually does is the
+ * company's own description to give, not something to infer from its name.
+ * Fill it in and the cards show a line underneath.
+ */
+export type GroupEntity = {
+  name: string;
+  /** Short line under the name, e.g. "Sourcing and procurement". */
+  note?: string;
+};
+
+export const GROUP: { parent: GroupEntity; children: GroupEntity[] } = {
+  parent: { name: "S and H Source International" },
+  children: [{ name: "SNI International Sourcing" }, { name: "Vision Traders" }],
+};
+
 export const SERVICES: ServiceContent[] = [
   {
     title: "Corporate Procurement",
