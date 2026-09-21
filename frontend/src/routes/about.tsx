@@ -2,12 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Target, Eye, Heart, Award, Users, Globe2 } from "lucide-react";
 import warehouseImg from "../assets/about-warehouse.jpg";
-import { AnimatedBackground, SectionHeading } from "../component/site/AnimatedBackground";
+import { SectionHeading } from "../component/site/AnimatedBackground";
+import { SceneBackground } from "../component/site/SceneCanvas";
+import { pageTitle } from "../data/company";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Source International" },
+      { title: pageTitle("About") },
       {
         name: "description",
         content:
@@ -82,7 +84,7 @@ const achievements = [
   },
   {
     icon: Users,
-    k: "100+ Clients",
+    k: "30+ Corporate Clients",
     v: "Private offices, education, institutes, manufacturing and retail served.",
   },
   {
@@ -97,14 +99,15 @@ function AboutPage() {
     <div>
       {/* HERO */}
       <section className="relative overflow-hidden bg-brand-dark py-24 text-white md:py-32">
-        <AnimatedBackground variant="dark" />
+        <SceneBackground variant="globe" />
         <div className="container-x relative">
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-accent">
               About Us
             </span>
             <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] md:text-6xl">
-              Built on <span className="text-gradient">trust</span>. <br /> Scaled with precision.
+              Built on <span className="text-gradient">trust</span>.{" "}
+              <br className="hidden md:inline" /> Scaled with precision.
             </h1>
             <p className="mt-6 max-w-2xl text-white/80">
               Source International is a corporate supplier and distributor specializing in
@@ -117,7 +120,7 @@ function AboutPage() {
 
       {/* STORY */}
       <section className="container-x py-24 md:py-32">
-        <div className="grid gap-12 md:grid-cols-2 md:items-center">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div className="relative overflow-hidden rounded-3xl shadow-elevated">
             <img
               src={warehouseImg}
@@ -140,11 +143,11 @@ function AboutPage() {
               }
               desc="What began as a focused stationery supplier grew — deliberately — into a full corporate procurement partner. Today, our teams support bulk contracts, annual supply agreements, recurring institutional orders and IT accessory fulfillment for private offices, institutes and companies."
             />
-            <div className="mt-8 grid grid-cols-2 gap-4">
+            <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-2">
               {[
                 { k: "14+", v: "Years supplying" },
                 { k: "9", v: "Product categories" },
-                { k: "100+", v: "Active clients" },
+                { k: "30+", v: "Corporate clients" },
                 { k: "10k+", v: "SKUs available" },
               ].map((s) => (
                 <div key={s.v} className="rounded-2xl border border-border bg-card p-5">
@@ -171,7 +174,7 @@ function AboutPage() {
               </>
             }
           />
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((v, i) => (
               <motion.div
                 key={v.title}
@@ -231,7 +234,7 @@ function AboutPage() {
 
       {/* ACHIEVEMENTS */}
       <section className="container-x pb-24">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {achievements.map((a) => (
             <div key={a.k} className="rounded-2xl border border-border bg-card p-6">
               <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand/5 text-brand">

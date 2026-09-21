@@ -3,17 +3,19 @@ import { motion } from "framer-motion";
 import { Mail, Phone, Linkedin } from "lucide-react";
 import imranImg from "../assets/team-imran.png";
 import nadeemImg from "../assets/team-nadeem.jpeg";
-import { AnimatedBackground, SectionHeading } from "../component/site/AnimatedBackground";
-import { LEADERSHIP } from "../data/company";
+import shamailaImg from "../assets/team-shamaila.png";
+import { SectionHeading } from "../component/site/AnimatedBackground";
+import { StaticBackdrop } from "../component/site/StaticBackdrop";
+import { LEADERSHIP, pageTitle } from "../data/company";
 
 export const Route = createFileRoute("/team")({
   head: () => ({
     meta: [
-      { title: "Leadership — Source International" },
+      { title: pageTitle("Team") },
       {
         name: "description",
         content:
-          "Meet the leadership team behind Source International — Muhammad Imran, Managing Partner, and Muhammad Nadeem, Manager Accounts.",
+          "Meet the leadership team behind Source International — Muhammad Imran, Managing Partner, Shamaila Shafeeq, Sourcing Head, and Muhammad Nadeem, Marketing Head.",
       },
       { property: "og:title", content: "Leadership Team — Source International" },
       {
@@ -27,13 +29,15 @@ export const Route = createFileRoute("/team")({
 
 // Portraits are bundled assets; the rest of each profile comes from data/company.ts.
 //
-// Both source photos are taller than the card's 4:5 frame, so `object-cover`
+// Every source photo is taller than the card's 4:5 frame, so `object-cover`
 // crops them vertically. `position` sets where that crop is anchored — without
 // it the default (centre) cuts through the subject's face. Tuned per photo
-// because the two shots are framed differently: Imran's is 3/4-length
-// (688x1529), Nadeem's is head-and-shoulders (848x1264).
+// because the shots are framed differently: Imran's is 3/4-length (804x1280),
+// Shamaila's is a 3:4 half-length shot (960x1280) that only loses a sliver
+// top and bottom, and Nadeem's is head-and-shoulders (1023x1537).
 const TEAM_PHOTOS: Record<string, { src: string; position: string }> = {
   "Muhammad Imran": { src: imranImg, position: "50% 20%" },
+  "Shamaila Shafeeq": { src: shamailaImg, position: "50% 25%" },
   "Muhammad Nadeem": { src: nadeemImg, position: "50% 25%" },
 };
 
@@ -47,18 +51,20 @@ function TeamPage() {
   return (
     <div>
       <section className="relative overflow-hidden bg-brand-dark py-24 text-white md:py-32">
-        <AnimatedBackground variant="dark" />
-        <div className="container-x relative max-w-3xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-accent">
-            Leadership
-          </span>
-          <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] md:text-6xl">
-            The people behind <span className="text-gradient">Source International</span>.
-          </h1>
-          <p className="mt-6 max-w-2xl text-white/80">
-            A focused leadership team combining decades of procurement, finance and operations
-            experience.
-          </p>
+        <StaticBackdrop />
+        <div className="container-x relative">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-accent">
+              Leadership
+            </span>
+            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] md:text-6xl">
+              The people behind <span className="text-gradient">Source International</span>.
+            </h1>
+            <p className="mt-6 max-w-2xl text-white/80">
+              A focused leadership team combining decades of procurement, finance and operations
+              experience.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -72,7 +78,7 @@ function TeamPage() {
             </>
           }
         />
-        <div className="mx-auto mt-14 grid max-w-5xl gap-8 md:grid-cols-2">
+        <div className="mx-auto mt-14 grid max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {team.map((m, i) => (
             <motion.article
               key={m.name}
@@ -105,15 +111,15 @@ function TeamPage() {
                 <div className="mt-6 grid gap-2 text-sm">
                   <a
                     href={`mailto:${m.email}`}
-                    className="flex items-center gap-2 text-foreground/80 hover:text-brand"
+                    className="flex min-h-11 items-center gap-2 text-foreground/80 hover:text-brand"
                   >
-                    <Mail className="h-4 w-4" /> {m.email}
+                    <Mail className="h-4 w-4 shrink-0" /> {m.email}
                   </a>
                   <a
                     href={`tel:${m.phone.replace(/\s/g, "")}`}
-                    className="flex items-center gap-2 text-foreground/80 hover:text-brand"
+                    className="flex min-h-11 items-center gap-2 text-foreground/80 hover:text-brand"
                   >
-                    <Phone className="h-4 w-4" /> {m.phone}
+                    <Phone className="h-4 w-4 shrink-0" /> {m.phone}
                   </a>
                 </div>
                 <div className="mt-6 flex items-center justify-between">
@@ -121,11 +127,11 @@ function TeamPage() {
                     href={m.linkedin}
                     target={m.linkedin.startsWith("http") ? "_blank" : undefined}
                     rel={m.linkedin.startsWith("http") ? "noreferrer" : undefined}
-                    className="inline-flex items-center gap-2 rounded-full gradient-royal px-4 py-2 text-xs font-semibold text-white shadow-glow"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full gradient-royal px-4 py-2.5 text-xs font-semibold text-white shadow-glow"
                   >
                     <Linkedin className="h-3.5 w-3.5" /> LinkedIn
                   </a>
-                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                  <span className="text-[11px] uppercase tracking-widest text-muted-foreground">
                     Source International
                   </span>
                 </div>

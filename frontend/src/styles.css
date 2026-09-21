@@ -46,18 +46,27 @@
   --radius: 0.875rem;
 
   /* Brand tokens (Source International) */
-  --brand: oklch(0.38 0.13 254);        /* #0B3C6F */
-  --brand-2: oklch(0.5 0.15 258);       /* #1E5EA8 */
+  --brand: oklch(0.38 0.13 254); /* #0B3C6F */
+  --brand-2: oklch(0.5 0.15 258); /* #1E5EA8 */
   --brand-accent: oklch(0.72 0.16 245); /* #3DA5FF */
-  --brand-dark: oklch(0.3 0.11 254);    /* #082B4E */
+  --brand-dark: oklch(0.3 0.11 254); /* #082B4E */
   --brand-ink: oklch(0.18 0.05 260);
 
-  --gradient-royal: linear-gradient(135deg, var(--brand-2) 0%, var(--brand) 55%, var(--brand-dark) 100%);
-  --gradient-glow: radial-gradient(60% 60% at 50% 0%, color-mix(in oklab, var(--brand-accent) 30%, transparent) 0%, transparent 70%);
+  --gradient-royal: linear-gradient(
+    135deg,
+    var(--brand-2) 0%,
+    var(--brand) 55%,
+    var(--brand-dark) 100%
+  );
+  --gradient-glow: radial-gradient(
+    60% 60% at 50% 0%,
+    color-mix(in oklab, var(--brand-accent) 30%, transparent) 0%,
+    transparent 70%
+  );
   --shadow-elevated: 0 20px 60px -20px color-mix(in oklab, var(--brand-dark) 45%, transparent);
   --shadow-glow: 0 10px 40px -10px color-mix(in oklab, var(--brand-accent) 45%, transparent);
 
-  --background: oklch(0.985 0.005 250);       /* #F8FAFC-ish */
+  --background: oklch(0.985 0.005 250); /* #F8FAFC-ish */
   --foreground: oklch(0.2 0.04 258);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.2 0.04 258);
@@ -79,23 +88,52 @@
 }
 
 .dark {
-  --background: oklch(0.15 0.03 258);
-  --foreground: oklch(0.98 0.005 250);
-  --card: oklch(0.2 0.04 258);
-  --card-foreground: oklch(0.98 0.005 250);
-  --popover: oklch(0.2 0.04 258);
-  --popover-foreground: oklch(0.98 0.005 250);
+  /* Surfaces: a blue-cast near-black, lifting in even steps so background <
+     card < popover < secondary reads as elevation rather than noise. */
+  --background: oklch(0.16 0.022 258);
+  --card: oklch(0.205 0.028 258);
+  --popover: oklch(0.23 0.03 258);
+  --secondary: oklch(0.245 0.032 258);
+  --muted: oklch(0.245 0.032 258);
+  --accent: oklch(0.28 0.045 250);
+
+  /* Text. Not pure white — full white on near-black glares. */
+  --foreground: oklch(0.96 0.008 250);
+  --card-foreground: oklch(0.96 0.008 250);
+  --popover-foreground: oklch(0.96 0.008 250);
+  --secondary-foreground: oklch(0.96 0.008 250);
+  --accent-foreground: oklch(0.96 0.008 250);
+  --muted-foreground: oklch(0.71 0.025 256);
+
+  /* The brand ramp is lifted: the light-mode navy (#0B3C6F) is barely legible
+     on these surfaces, and `text-brand` carries eyebrows, links and prices. */
+  --brand: oklch(0.68 0.12 250);
+  --brand-2: oklch(0.62 0.15 256);
+  --brand-accent: oklch(0.8 0.12 238);
+  /* Hero and footer panels sit just above the page rather than below it. */
+  --brand-dark: oklch(0.235 0.05 258);
+
+  /* Buttons keep their own darker ramp — the lifted --brand above would leave
+     white button text at roughly 3:1. These stops hold white at 6:1 or better. */
+  --gradient-royal: linear-gradient(
+    135deg,
+    oklch(0.5 0.16 258) 0%,
+    oklch(0.41 0.14 254) 55%,
+    oklch(0.3 0.1 258) 100%
+  );
+
   --primary: var(--brand-accent);
-  --primary-foreground: var(--brand-dark);
-  --secondary: oklch(0.25 0.05 258);
-  --secondary-foreground: oklch(0.98 0.005 250);
-  --muted: oklch(0.25 0.05 258);
-  --muted-foreground: oklch(0.7 0.03 258);
-  --accent: oklch(0.28 0.06 250);
-  --accent-foreground: oklch(0.98 0.005 250);
+  --primary-foreground: oklch(0.18 0.04 258);
+  --destructive: oklch(0.68 0.2 27);
+  --destructive-foreground: oklch(0.16 0.02 258);
+
   --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 14%);
   --ring: var(--brand-accent);
+
+  /* A brand-tinted shadow is invisible on a dark ground; go black and deeper. */
+  --shadow-elevated: 0 24px 64px -24px rgb(0 0 0 / 0.75);
+  --shadow-glow: 0 10px 40px -12px color-mix(in oklab, var(--brand-accent) 32%, transparent);
 }
 
 @utility container-x {
@@ -103,8 +141,12 @@
   margin-inline: auto;
   padding-inline: 1.25rem;
   max-width: 80rem;
-  @media (min-width: 768px) { padding-inline: 2rem; }
-  @media (min-width: 1280px) { padding-inline: 3rem; }
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 1280px) {
+    padding-inline: 3rem;
+  }
 }
 
 @utility gradient-royal {
@@ -158,24 +200,26 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4, h5 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
 }
 
-/* Marquee for partner carousel */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.animate-marquee {
-  animation: marquee 30s linear infinite;
-}
-
 /* Floating orbs */
 @keyframes float-slow {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -24px, 0); }
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -24px, 0);
+  }
 }
-.animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}

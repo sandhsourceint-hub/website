@@ -11,9 +11,19 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar, ScrollProgress } from "../component/site/Navbar";
+import { CookieNotice } from "../component/site/CookieNotice";
 import { Footer } from "../component/site/Footer";
+import { THEME_INIT_SCRIPT } from "../component/site/theme";
+import { pageTitle } from "../data/company";
 
 function NotFoundComponent() {
+  // An unmatched URL has no route of its own to carry a `head`, so the server
+  // renders the root's site-wide title here. Name the tab once we're on the
+  // client; the router resets it from the route's `head` on the way out.
+  useEffect(() => {
+    document.title = pageTitle("Page not found");
+  }, []);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
@@ -96,10 +106,11 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      // The "S&H" tile from LogoMark. SVG for browsers that take it, .ico as
-      // the fallback; both live in public/.
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
-      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      // The company "S&H" mark, cropped square from src/assets/LOGO.png. The
+      // .ico carries 16/32/48 for the tab; the 96px PNG is what modern
+      // browsers pick for bookmarks and the new-tab grid. Both live in public/.
+      { rel: "icon", href: "/favicon.ico", sizes: "16x16 32x32 48x48" },
+      { rel: "icon", href: "/favicon-96.png", type: "image/png", sizes: "96x96" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -117,9 +128,12 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        {/* Must run before the first paint, otherwise a dark-theme visitor sees
+            a flash of the light palette. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body>
         {children}
@@ -138,6 +152,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <CookieNotice />
     </>
   );
 }

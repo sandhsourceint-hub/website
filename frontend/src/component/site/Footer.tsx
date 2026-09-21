@@ -1,17 +1,24 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
 
+import worldDots from "../../assets/world-dots.svg";
 import { BRAND as brand } from "../../data/company";
 import { Logo } from "./Logo";
 
 export function Footer() {
   return (
     <footer className="relative mt-24 overflow-hidden bg-brand-dark text-white/80">
-      <div className="pointer-events-none absolute inset-0 opacity-30 grid-pattern" />
+      {/* Dot-matrix world map, sized to fill the footer and crop at the
+          edges. White dots at low opacity pick up the navy behind them. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-[0.13]"
+        style={{ backgroundImage: `url(${worldDots})` }}
+      />
       <div className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[60rem] -translate-x-1/2 rounded-full bg-brand-accent/20 blur-3xl" />
 
       <div className="container-x relative py-16">
-        <div className="grid gap-12 lg:grid-cols-4">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <Logo surface="dark" showStrapline={false} />
             <p className="mt-5 max-w-md font-display text-base font-semibold leading-snug text-white/90">
@@ -25,7 +32,7 @@ export function Footer() {
               <a
                 href="#"
                 aria-label="LinkedIn"
-                className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-white/5 transition hover:bg-white/10"
+                className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white/5 transition hover:bg-white/10"
               >
                 <Linkedin className="h-4 w-4" />
               </a>
@@ -36,7 +43,7 @@ export function Footer() {
             <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-white">
               Company
             </h4>
-            <ul className="mt-5 space-y-3 text-sm">
+            <ul className="mt-5 text-sm">
               {[
                 { to: "/about", label: "About" },
                 { to: "/team", label: "Leadership" },
@@ -45,7 +52,10 @@ export function Footer() {
                 { to: "/contact", label: "Contact" },
               ].map((l) => (
                 <li key={l.to}>
-                  <Link to={l.to} className="text-white/70 transition hover:text-white">
+                  <Link
+                    to={l.to}
+                    className="inline-flex min-h-11 items-center text-white/70 transition hover:text-white"
+                  >
                     {l.label}
                   </Link>
                 </li>
@@ -62,7 +72,18 @@ export function Footer() {
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-accent" /> {brand.location}
               </li>
               <li className="flex gap-3">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand-accent" /> {brand.phone}
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand-accent" />
+                <span className="flex flex-col">
+                  {[brand.phone, ...brand.mobiles].map((number) => (
+                    <a
+                      key={number}
+                      href={`tel:${number.replace(/[^+\d]/g, "")}`}
+                      className="inline-flex min-h-11 items-center transition hover:text-white"
+                    >
+                      {number}
+                    </a>
+                  ))}
+                </span>
               </li>
               <li className="flex gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand-accent" /> {brand.email}
