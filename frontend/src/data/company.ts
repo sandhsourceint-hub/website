@@ -31,6 +31,67 @@ export type Brand = {
 };
 
 /**
+ * Where a contact link should send the visitor.
+ *
+ * The point is that nobody has to copy a number into WhatsApp or retype an
+ * address into a compose window — the link arrives with the conversation
+ * already open and the message started.
+ */
+
+/** Opening line carried into WhatsApp, so the chat is not a blank box. */
+export const WHATSAPP_GREETING =
+  "Hello Source International — I would like to ask about your products and pricing.";
+
+/** The details every inquiry needs, pre-typed into the mail body. */
+export const INQUIRY_BODY = [
+  "Name:",
+  "Organization:",
+  "Phone:",
+  "",
+  "Products / quantities required:",
+  "",
+  "Delivery timeline:",
+  "",
+].join("\n");
+
+/**
+ * Whether a number is real enough to link.
+ *
+ * A record still carrying its placeholder (+92 300 000 0000) must not become a
+ * WhatsApp link: the chat would open against an account that does not exist,
+ * which looks worse to a customer than showing no number at all. Detected by
+ * the run of trailing zeros rather than by matching the literal string, so a
+ * different placeholder is caught too.
+ */
+export function isDiallable(phone: string): boolean {
+  const digits = phone.replace(/\D/g, "");
+  return digits.length >= 11 && !/0{6,}$/.test(digits);
+}
+
+/**
+ * A wa.me chat link.
+ *
+ * wa.me wants a full international number as bare digits: no plus, no spaces,
+ * country code included. Only pass a mobile — WhatsApp has no account behind a
+ * landline, and the link would land the visitor on an "invalid number" page.
+ */
+export function whatsappLink(mobile: string, message: string = WHATSAPP_GREETING): string {
+  return `https://wa.me/${mobile.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * A Gmail compose window, opened on the web with the message already filled in.
+ *
+ * Note this commits the visitor to Gmail rather than whatever mail client they
+ * actually use; someone on Outlook or Apple Mail is asked to sign in to Google.
+ * Swap this one function for a mailto: and every link on the site follows.
+ */
+export function gmailLink(subject: string, body: string = INQUIRY_BODY, to = BRAND.email): string {
+  const params = new URLSearchParams({ view: "cm", fs: "1", to, su: subject, body });
+  return `https://mail.google.com/mail/?${params.toString()}`;
+}
+
+/**
  * Tab title for a page: the page's own name first, so it stays readable when
  * the browser truncates a narrow tab, then the company name.
  *

@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 
 import worldDots from "../../assets/world-dots.svg";
-import { BRAND as brand } from "../../data/company";
+import { BRAND as brand, gmailLink, whatsappLink } from "../../data/company";
 import { Logo } from "./Logo";
 
 export function Footer() {
@@ -74,19 +75,40 @@ export function Footer() {
               <li className="flex gap-3">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand-accent" />
                 <span className="flex flex-col">
-                  {[brand.phone, ...brand.mobiles].map((number) => (
+                  <a
+                    href={`tel:${brand.phone.replace(/[^+\d]/g, "")}`}
+                    className="inline-flex min-h-11 items-center transition hover:text-white"
+                  >
+                    {brand.phone}
+                  </a>
+                  {brand.mobiles.map((number) => (
                     <a
                       key={number}
-                      href={`tel:${number.replace(/[^+\d]/g, "")}`}
-                      className="inline-flex min-h-11 items-center transition hover:text-white"
+                      href={whatsappLink(number)}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`Message ${number} on WhatsApp`}
+                      className="group inline-flex min-h-11 items-center gap-2 transition hover:text-white"
                     >
                       {number}
+                      <FaWhatsapp
+                        aria-hidden
+                        className="h-4 w-4 text-[#25D366] opacity-80 transition group-hover:opacity-100"
+                      />
                     </a>
                   ))}
                 </span>
               </li>
               <li className="flex gap-3">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand-accent" /> {brand.email}
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand-accent" />
+                <a
+                  href={gmailLink("Inquiry — Source International")}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 items-center transition hover:text-white"
+                >
+                  {brand.email}
+                </a>
               </li>
             </ul>
           </div>

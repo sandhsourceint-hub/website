@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Phone, MapPin, Printer, Clock, ArrowRight } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { SectionHeading } from "../component/site/AnimatedBackground";
 import { StaticBackdrop } from "../component/site/StaticBackdrop";
-import { BRAND as brand, pageTitle } from "../data/company";
+import { BRAND as brand, gmailLink, whatsappLink, pageTitle } from "../data/company";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -30,21 +31,6 @@ const INQUIRY_TYPES = [
   "Product Quotation",
   "Partnership",
 ];
-
-/** Pre-fills the visitor's email client with a structured inquiry. */
-function inquiryMailto(subject: string) {
-  const body = [
-    "Name:",
-    "Organization:",
-    "Phone:",
-    "",
-    "Products / quantities required:",
-    "",
-    "Delivery timeline:",
-    "",
-  ].join("\n");
-  return `mailto:${brand.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
 
 function ContactPage() {
   // Optional details (fax) are omitted rather than rendered as an empty card.
@@ -110,7 +96,7 @@ function ContactPage() {
             />
 
             <a
-              href={inquiryMailto("Corporate Inquiry — Source International")}
+              href={gmailLink("Corporate Inquiry — Source International")}
               className="mt-8 inline-flex items-center justify-center gap-2 rounded-full gradient-royal px-6 py-3.5 text-sm font-semibold text-white shadow-glow transition hover:scale-[1.01]"
             >
               <Mail className="h-4 w-4" /> Email us
@@ -124,7 +110,7 @@ function ContactPage() {
                 {INQUIRY_TYPES.map((t) => (
                   <li key={t}>
                     <a
-                      href={inquiryMailto(`${t} — Source International`)}
+                      href={gmailLink(`${t} — Source International`)}
                       className="group flex items-center justify-between rounded-xl border border-border px-4 py-3 text-sm font-medium transition hover:border-brand/30 hover:bg-secondary"
                     >
                       {t}
@@ -165,7 +151,9 @@ function ContactPage() {
               </p>
               <div className="mt-4 grid gap-2 text-sm">
                 <a
-                  href={`mailto:${brand.email}`}
+                  href={gmailLink("Urgent supply requirement — Source International")}
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex min-h-11 items-center gap-2 text-brand hover:underline"
                 >
                   <Mail className="h-4 w-4 shrink-0" /> {brand.email}
@@ -176,6 +164,18 @@ function ContactPage() {
                 >
                   <Phone className="h-4 w-4 shrink-0" /> {brand.phone}
                 </a>
+                {brand.mobiles.map((number) => (
+                  <a
+                    key={number}
+                    href={whatsappLink(number)}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Message ${number} on WhatsApp`}
+                    className="flex min-h-11 items-center gap-2 text-brand hover:underline"
+                  >
+                    <FaWhatsapp className="h-4 w-4 shrink-0 text-[#25D366]" /> {number}
+                  </a>
+                ))}
               </div>
             </div>
           </div>

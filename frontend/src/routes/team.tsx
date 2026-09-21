@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Mail, Phone, Linkedin } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import imranImg from "../assets/team-imran.png";
 import nadeemImg from "../assets/team-nadeem.jpeg";
 import shamailaImg from "../assets/team-shamaila.png";
 import { SectionHeading } from "../component/site/AnimatedBackground";
 import { StaticBackdrop } from "../component/site/StaticBackdrop";
-import { LEADERSHIP, pageTitle } from "../data/company";
+import { LEADERSHIP, gmailLink, isDiallable, whatsappLink, pageTitle } from "../data/company";
 
 export const Route = createFileRoute("/team")({
   head: () => ({
@@ -110,17 +111,30 @@ function TeamPage() {
                 <p className="text-sm leading-relaxed text-muted-foreground">{m.bio}</p>
                 <div className="mt-6 grid gap-2 text-sm">
                   <a
-                    href={`mailto:${m.email}`}
+                    href={gmailLink(
+                      `Inquiry for ${m.name} — Source International`,
+                      undefined,
+                      m.email,
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
                     className="flex min-h-11 items-center gap-2 text-foreground/80 hover:text-brand"
                   >
                     <Mail className="h-4 w-4 shrink-0" /> {m.email}
                   </a>
-                  <a
-                    href={`tel:${m.phone.replace(/\s/g, "")}`}
-                    className="flex min-h-11 items-center gap-2 text-foreground/80 hover:text-brand"
-                  >
-                    <Phone className="h-4 w-4 shrink-0" /> {m.phone}
-                  </a>
+                  {/* Leadership numbers are mobiles, so they open a chat --
+                      unless the record still holds a placeholder. */}
+                  {isDiallable(m.phone) && (
+                    <a
+                      href={whatsappLink(m.phone)}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`Message ${m.name} on WhatsApp`}
+                      className="flex min-h-11 items-center gap-2 text-foreground/80 hover:text-brand"
+                    >
+                      <FaWhatsapp className="h-4 w-4 shrink-0 text-[#25D366]" /> {m.phone}
+                    </a>
+                  )}
                 </div>
                 <div className="mt-6 flex items-center justify-between">
                   <a
